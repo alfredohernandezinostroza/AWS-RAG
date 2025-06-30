@@ -1,7 +1,7 @@
 from aws_cdk import (
     # Duration,
     Stack,
-    s3,
+    aws_s3 as s3,
     aws_s3_deployment as s3deploy,
 )
 from constructs import Construct
