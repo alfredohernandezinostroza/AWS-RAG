@@ -12,8 +12,7 @@ class Chatbot1Stack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
-
-        bucket = s3.Bucket(self, f"chatbot-bucket", bucket_name=f"chatbot-bucket")
+        bucket = s3.Bucket(self, f"chatbot-bucket-{self.account}", bucket_name=f"chatbot-bucket-{self.account}")
         
         s3deploy.BucketDeployment(self, "deploy-chatbot-bucket",
             sources=[s3deploy.Source.asset("./sagemaker_documentation")],
