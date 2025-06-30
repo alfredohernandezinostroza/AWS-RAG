@@ -1,7 +1,8 @@
 from aws_cdk import (
     # Duration,
     Stack,
-    # aws_sqs as sqs,
+    s3,
+    aws_s3_deployment as s3deploy,
 )
 from constructs import Construct
 
@@ -11,6 +12,13 @@ class Chatbot1Stack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
+
+        bucket = s3.Bucket(self, f"chatbot-bucket", bucket_name=f"chatbot-bucket")
+        
+        s3deploy.BucketDeployment(self, "deploy-chatbot-bucket",
+            sources=[s3deploy.Source.asset("./sagemaker_documentation")],
+            destination_bucket=bucket,
+        )
 
         # example resource
         # queue = sqs.Queue(
