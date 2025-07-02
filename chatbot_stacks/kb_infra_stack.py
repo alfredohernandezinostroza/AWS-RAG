@@ -198,7 +198,7 @@ class KbInfraStack(Stack):
         ingest_lambda.add_to_role_policy(
             iam.PolicyStatement(
                 actions=["bedrock:StartIngestionJob"],
-                resources=[knowledge_base.knowledge_base_arn]
+                resources=[knowledge_base.attr_knowledge_base_arn]
             )
         )
         return ingest_lambda
