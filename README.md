@@ -15,7 +15,9 @@ The diagram of the architecture is as follows:
 In ./Deployment, the source code for the code developed using AWS CDK is available to deploy the resources. First, the requirements inside deployments can be installed in a python virtual environement with:
 
 ```python -m venv```
+
 ```source .venv/bin/active```
+
 ```python -m pip install -r requirements.txt```
 
 Then, the code can be deployed to a bootstrapped AWS environment with:
