@@ -1,17 +1,8 @@
 from constructs import Construct
-
 import aws_cdk as core
 from aws_cdk import (
-    Duration,
     Stack,
-    aws_iam as iam,
-    aws_sqs as sqs,
-    aws_sns as sns,
-    aws_lambda as _lambda,
-    aws_sns_subscriptions as subs,
-    aws_logs as logs,
     aws_ssm as ssm,
-    aws_cloudformation as cfn,
 )
 from aws_cdk import custom_resources 
 
