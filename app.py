@@ -5,11 +5,14 @@ import aws_cdk as cdk
 
 from config import EnvSettings
 from chatbot_stacks.S3Stack import S3Stack
-
+from stacks.kb_role_stack import KbRoleStack
 
 app = cdk.App()
 S3Stack(app, "S3Stack",
     env=cdk.Environment(account=EnvSettings.ACCOUNT_ID, region=EnvSettings.ACCOUNT_REGION),
     )
+
+#IAM Role
+kbRole_stack = KbRoleStack(app, "KbRoleStack")
 
 app.synth()
