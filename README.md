@@ -1,58 +1,21 @@
 
-# Welcome to your CDK Python project!
+# LOKA Challenge
 
-This is a blank project for CDK development with Python.
+As stated in the challenge, Company X's main paint point is that currently their developers lose time and interrupr coworkers asking simple questions, while the answers are already available in the company's documentation.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+In order to solve this problem it is proposed an LLM-based chatbot with Retrieval Augmented Generation capabilities. This way, the developers could ask their questions to the chatbot, get the answers they need, and even get references from the documentation for further reading.
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+This repository contains an implementation of such a system, using several AWS Services: Amazon S3, Bedrock Knowledge Bases, and OpenSearch Service.
 
-To manually create a virtualenv on MacOS and Linux:
+The diagram of the architecture is as follows:
 
-```
-$ python3 -m venv .venv
-```
+![diagram](diagram_export.svg)
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
 
-```
-$ source .venv/bin/activate
-```
+In ./Deployment, the source code for the code developed using AWS CDK is available to deploy the resources. It can be deployed in a bootstrapped AWS environment with:
 
-If you are a Windows platform, you would activate the virtualenv like this:
+```cdk deploy --all```
 
-```
-% .venv\Scripts\activate.bat
-```
+In ./Frontend, a simple chat application has been deployed for demonstration purposes.
 
-Once the virtualenv is activated, you can install the required dependencies.
 
-```
-$ pip install -r requirements.txt
-```
-
-At this point you can now synthesize the CloudFormation template for this code.
-
-```
-$ cdk synth
-```
-
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
-
-## Useful commands
-
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
-
-Enjoy!
