@@ -15,8 +15,6 @@ region = EnvSettings.ACCOUNT_REGION
 account_id = EnvSettings.ACCOUNT_ID
 kb_role_name = KbConfig.KB_ROLE_NAME
 bucket_name = DsConfig.S3_BUCKET_NAME
-interim_bucket_name = DsConfig.MM_STORAGE_S3
-multi_modal = bool(KbConfig.MULTI_MODAL and KbConfig.OVERLAP_PERCENTAGE)
 
 class KbRoleStack(Stack):
 
