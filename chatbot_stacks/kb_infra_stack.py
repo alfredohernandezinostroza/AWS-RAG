@@ -213,7 +213,8 @@ class KbInfraStack(Stack):
             code=lambda_.Code.from_asset("./lambda_functions/queryKnowledgeBase"),
             timeout=Duration.minutes(5),
             environment={
-                "KNOWLEDGE_BASE_ID": knowledge_base.attr_knowledge_base_id
+                "KNOWLEDGE_BASE_ID": knowledge_base.attr_knowledge_base_id,
+                "USER_ID": EnvSettings.ACCOUNT_ID
             }
         )
 
