@@ -224,7 +224,7 @@ class KbInfraStack(Stack):
             }
         )
 
-        # Add permissions for Bedrock in GovCloud
+        # Add permissions for Bedrock
         query_lambda.add_to_role_policy(
             iam.PolicyStatement(
                 actions=[
