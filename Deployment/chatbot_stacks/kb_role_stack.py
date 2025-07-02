@@ -21,7 +21,7 @@ class KbRoleStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # Get the partition dynamically - will be 'aws-us-gov' in GovCloud
+        # Get the partition dynamically
         partition = Stack.of(self).partition
 
         # Create KB Role with partition-aware ARNs
