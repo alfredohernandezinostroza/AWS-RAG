@@ -1,0 +1,3 @@
+{
+  "responseMessage": "Hello! You said: {{message}}"
+}
