@@ -70,6 +70,10 @@ class KbInfraStack(Stack):
         ).string_value
         self.knowledge_base = self.create_knowledge_base_oss()
         self.data_source = self.create_data_source(self.knowledge_base)
+
+        self.ingest_lambda = self.create_ingest_lambda( self.knowledge_base, self.data_source)
+        self.query_lambda = self.create_query_lambda(self.knowledge_base)
+
     
     def create_knowledge_base_oss(self) -> CfnKnowledgeBase:
         print("Creating knowledge base with OSS vector store....")
