@@ -94,7 +94,7 @@ class KbInfraStack(Stack):
                     supplemental_data_storage_configuration=supplemental_data_storage_configuration
                 )
             ),
-            name='docKnowledgeBaseOSS',
+            name='MyKnowledgeBaseOSS',
             role_arn=self.kbRoleArn,
             description='e2e multi-modal RAG Knowledge base with OSS',
             storage_configuration=CfnKnowledgeBase.StorageConfigurationProperty(
