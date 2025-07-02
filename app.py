@@ -23,4 +23,9 @@ infra_stack = OpenSearchServerlessStack(app, "OpenSearchServerlessStack")
 # create Knowledgebase and datasource
 kbInfra_stack = KbInfraStack(app, "KbInfraStack")
 
+# set up dependencies 
+infra_stack.add_dependency(kbRole_stack)
+# infra_stack.add_dependency(chatbot1_stack)
+kbInfra_stack.add_dependency(infra_stack)
+
 app.synth()
