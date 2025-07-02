@@ -252,6 +252,7 @@ class KbInfraStack(Stack):
 
         return query_lambda
   
+  #the following can be used to update the vectors once a file is uploaded to the S3 bucket
     def add_eventbridge_rule(self, bucket, lambda_function):
         rule = events.Rule(
             self, 
