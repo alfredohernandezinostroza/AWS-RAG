@@ -67,25 +67,13 @@ class KbRoleStack(Stack):
                           sid="S3ListBucketStatement",
                           effect=iam.Effect.ALLOW,
                           actions=["s3:ListBucket"],
-                          resources=[f"arn:{partition}:s3:::{bucket_name}", f"arn:{partition}:s3:::{interim_bucket_name}"],
+                          resources=[f"arn:{partition}:s3:::{bucket_name}"],
                       ),
                       iam.PolicyStatement(
                           sid="S3GetObjectStatement",
                           effect=iam.Effect.ALLOW,
                           actions=["s3:GetObject"],
-                          resources=[f"arn:{partition}:s3:::{bucket_name}", f"arn:{partition}:s3:::{bucket_name}/*", f"arn:{partition}:s3:::{interim_bucket_name}", f"arn:{partition}:s3:::{interim_bucket_name}/*" ],
-                      ),
-                       iam.PolicyStatement(
-                          sid="S3PutObjectStatement",
-                          effect=iam.Effect.ALLOW,
-                          actions=["s3:PutObject"],
-                          resources=[f"arn:{partition}:s3:::{interim_bucket_name}/*" ],
-                      ),
-                      iam.PolicyStatement(
-                          sid="S3DeleteObjectStatement",
-                          effect=iam.Effect.ALLOW,
-                          actions=["s3:DeleteObject"],
-                          resources=[f"arn:{partition}:s3:::{interim_bucket_name}/*" ],
+                          resources=[f"arn:{partition}:s3:::{bucket_name}", f"arn:{partition}:s3:::{bucket_name}/*"],
                       ),
                   ]
               ),
