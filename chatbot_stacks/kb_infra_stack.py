@@ -187,7 +187,7 @@ class KbInfraStack(Stack):
             "IngestionJob",
             runtime=lambda_.Runtime.PYTHON_3_10,
             handler="ingestJobLambda.lambda_handler",
-            code=lambda_.Code.from_asset("./src/IngestJob"),
+            code=lambda_.Code.from_asset("./lambda_functions/IngestJob"),
             timeout=Duration.minutes(5),
             environment={
                 "KNOWLEDGE_BASE_ID": knowledge_base.attr_knowledge_base_id,
@@ -205,13 +205,12 @@ class KbInfraStack(Stack):
 
     def create_query_lambda(self, knowledge_base) -> lambda_:
         partition = Stack.of(self).partition
-        
         query_lambda = lambda_.Function(
             self, 
             "Query",
             runtime=lambda_.Runtime.PYTHON_3_10,
-            handler="queryKBLambda.handler",
-            code=lambda_.Code.from_asset("./src/queryKnowledgeBase"),
+            handler="queryKBLambda.lambda_handler",
+            code=lambda_.Code.from_asset("./lambda_functions/queryKnowledgeBase"),
             timeout=Duration.minutes(5),
             environment={
                 "KNOWLEDGE_BASE_ID": knowledge_base.attr_knowledge_base_id
