@@ -6,15 +6,17 @@ from aws_cdk import (
     RemovalPolicy,
 )
 from constructs import Construct
+from config import DsConfig
 
+bucket_name = DsConfig.S3_BUCKET_NAME
 class S3Stack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
-        bucket = s3.Bucket(self, f"chatbot-bucket-{self.account}",
-                            bucket_name=f"chatbot-bucket-{self.account}",
+        bucket = s3.Bucket(self, bucket_name,
+                            bucket_name=bucket_name,
                             removal_policy=RemovalPolicy.DESTROY,
                             auto_delete_objects=True)
         
