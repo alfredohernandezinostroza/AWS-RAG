@@ -7,6 +7,7 @@ from config import EnvSettings
 from chatbot_stacks.s3Stack import S3Stack
 from chatbot_stacks.kb_role_stack import KbRoleStack
 from chatbot_stacks.oss_infra_stack import OpenSearchServerlessStack
+from chatbot_stacks.kb_infra_stack import KbInfraStack
 
 app = cdk.App()
 S3Stack(app, "S3Stack",
@@ -19,5 +20,7 @@ kbRole_stack = KbRoleStack(app, "KbRoleStack")
 # setup vector store
 infra_stack = OpenSearchServerlessStack(app, "OpenSearchServerlessStack")
 
+# create Knowledgebase and datasource
+kbInfra_stack = KbInfraStack(app, "KbInfraStack")
 
 app.synth()
