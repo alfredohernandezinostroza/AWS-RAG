@@ -156,7 +156,7 @@ class KbInfraStack(Stack):
             "IngestionJob",
             runtime=lambda_.Runtime.PYTHON_3_10,
             handler="ingestJobLambda.lambda_handler",
-            code=lambda_.Code.from_asset("./lambda_functions/IngestJob"),
+            code=lambda_.Code.from_asset("./chatbot_stacks/lambda_functions/IngestJob"),
             timeout=Duration.minutes(5),
             environment={
                 "KNOWLEDGE_BASE_ID": knowledge_base.attr_knowledge_base_id,
@@ -179,7 +179,7 @@ class KbInfraStack(Stack):
             "Query",
             runtime=lambda_.Runtime.PYTHON_3_10,
             handler="queryKBLambda.lambda_handler",
-            code=lambda_.Code.from_asset("./lambda_functions/queryKnowledgeBase"),
+            code=lambda_.Code.from_asset("./chatbot_stacks/lambda_functions/IngestJob"),
             timeout=Duration.minutes(5),
             environment={
                 "KNOWLEDGE_BASE_ID": knowledge_base.attr_knowledge_base_id,
