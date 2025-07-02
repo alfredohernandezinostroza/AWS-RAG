@@ -79,7 +79,7 @@ class KbConfig:
     PARSING_STRATEGY = "BEDROCK_FOUNDATION_MODEL" # TODO: Change this value to 'BEDROCK_FOUNDATION_MODEL' for FM parser, or  BEDROCK_DATA_AUTOMATION for BDA Parser
     
 class DsConfig:
-    S3_BUCKET_NAME = f"chatbot-bucket-{os.getenv('CDK_DEFAULT_ACCOUNT')}" # TODO: Change this to the S3 bucket where your data is stored
+    S3_BUCKET_NAME = f"chatbot-bucket-{os.getenv('CDK_DEFAULT_ACCOUNT')}-{EnvSettings.ACCOUNT_REGION}" # TODO: Change this to the S3 bucket where your data is stored
 
 class OpenSearchServerlessConfig:
     COLLECTION_NAME = f"{EnvSettings.RAG_PROJ_NAME}-kb-collection"
