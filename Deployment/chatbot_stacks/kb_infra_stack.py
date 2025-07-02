@@ -27,9 +27,7 @@ collectionName = OpenSearchServerlessConfig.COLLECTION_NAME
 indexName = OpenSearchServerlessConfig.INDEX_NAME
 
 embeddingModelId = KbConfig.EMBEDDING_MODEL_ID
-multi_modal = bool(KbConfig.MULTI_MODAL and KbConfig.PARSING_STRATEGY)
 parsing_strategy = KbConfig.PARSING_STRATEGY
-intermediate_bucket_name = DsConfig.MM_STORAGE_S3
 
 max_tokens = KbConfig.MAX_TOKENS
 overlap_percentage = KbConfig.OVERLAP_PERCENTAGE
@@ -46,7 +44,6 @@ class KbInfraStack(Stack):
         self.embedding_model_arn = f"arn:{partition}:bedrock:{region}::foundation-model/{embeddingModelId}"
         self.parser_model_arn = f"arn:aws:bedrock:{self.region}::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0"
         self.s3_bucket_arn = f"arn:{partition}:s3:::{DsConfig.S3_BUCKET_NAME}"
-        self.intermediate_bucket_arn = f"arn:{partition}:s3:::{DsConfig.MM_STORAGE_S3}"
 
         self.kbRoleArn = ssm.StringParameter.from_string_parameter_attributes(
             self, 
@@ -73,16 +70,6 @@ class KbInfraStack(Stack):
     def create_knowledge_base_oss(self) -> CfnKnowledgeBase:
         print("Creating knowledge base with OSS vector store....")
         supplemental_data_storage_configuration = []
-
-        if multi_modal:
-            print("Creating Multi modal suplementalstorage configuration...")
-            supplemental_data_storage_configuration=CfnKnowledgeBase.SupplementalDataStorageConfigurationProperty(
-                    supplemental_data_storage_locations=[CfnKnowledgeBase.SupplementalDataStorageLocationProperty(
-                        supplemental_data_storage_location_type="S3",
-                        s3_location=CfnKnowledgeBase.S3LocationProperty
-                        (uri=f"s3://{intermediate_bucket_name}")
-                    )]
-                )
         return CfnKnowledgeBase(
             self, 
             'e2eRagKB',
@@ -115,19 +102,6 @@ class KbInfraStack(Stack):
         kbid = knowledge_base.attr_knowledge_base_id
         chunking_strategy = KbConfig.CHUNKING_STRATEGY
         parsing_configuration = None
-        if multi_modal and parsing_strategy == "BEDROCK_DATA_AUTOMATION":
-             parsing_configuration=bedrock.CfnDataSource.ParsingConfigurationProperty(
-                    parsing_strategy= parsing_strategy,
-                    bedrock_data_automation_configuration=bedrock.CfnDataSource.BedrockDataAutomationConfigurationProperty(
-                        parsing_modality="MULTIMODAL" ) 
-             )
-        if multi_modal and parsing_strategy == "BEDROCK_FOUNDATION_MODEL":
-            parsing_configuration=bedrock.CfnDataSource.ParsingConfigurationProperty(
-                    parsing_strategy= parsing_strategy,
-                    bedrock_foundation_model_configuration=bedrock.CfnDataSource.BedrockFoundationModelConfigurationProperty(
-                    model_arn=self.parser_model_arn)
-            )
-        
         print("Parsing configuration: ",parsing_configuration)
 
         if chunking_strategy == "Fixed-size chunking":
