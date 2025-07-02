@@ -16,4 +16,6 @@ In ./Deployment, the source code for the code developed using AWS CDK is availab
 
 ```cdk deploy --all```
 
+This assumes the current active CDK profile has the same region as the one in config.py/
+
 In ./Frontend, a simple chat application has been included for demonstration purposes. It can be served as a static website. The only modificantion it needs to work is to fill the backend_url variable with the lambda url generated.
