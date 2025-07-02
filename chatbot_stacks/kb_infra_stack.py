@@ -224,7 +224,8 @@ class KbInfraStack(Stack):
             invoke_mode=lambda_.InvokeMode.BUFFERED,
             cors={
                 "allowed_origins": ["*"],
-                "allowed_methods": [lambda_.HttpMethod.POST]
+                "allowed_methods": [lambda_.HttpMethod.POST],
+                "allowed_headers": ['Content-Type']
             }
         )
 
