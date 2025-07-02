@@ -240,6 +240,46 @@ class KbInfraStack(Stack):
                 resources=[f"arn:{partition}:bedrock:{region}:*:*"]
             )
         )
+        query_lambda.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=[
+                    "bedrock:RetrieveAndGenerate",
+                    "bedrock:Retrieve",
+                    "bedrock:InvokeModel",
+                    "bedrock:GetInferenceProfile"
+                ],
+                resources=[f"arn:{partition}:bedrock:{region}:*:inference-profile/us.amazon.nova-micro-v1:0"]
+            )
+        )
+        query_lambda.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=[
+                "bedrock:InvokeModel*",
+                "bedrock:CreateInferenceProfile"
+                ],
+                resources=[
+                "arn:aws:bedrock:*::foundation-model/*",
+                "arn:aws:bedrock:*:*:inference-profile/*",
+                "arn:aws:bedrock:*:*:application-inference-profile/*"
+                ]
+            )
+        )
+        query_lambda.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=[
+                "bedrock:GetInferenceProfile",
+                "bedrock:ListInferenceProfiles",
+                "bedrock:DeleteInferenceProfile",
+                "bedrock:TagResource",
+                "bedrock:UntagResource",
+                "bedrock:ListTagsForResource"
+                ],
+                resources=[
+                "arn:aws:bedrock:*:*:inference-profile/*",
+                "arn:aws:bedrock:*:*:application-inference-profile/*"
+                ]
+            )
+        )
 
         return query_lambda
   
