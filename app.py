@@ -9,7 +9,7 @@ from chatbot_stacks.S3Stack import S3Stack
 
 app = cdk.App()
 S3Stack(app, "S3Stack",
-    env=cdk.Environment(account=EnvSettings.ACCOUNT_ID, region=os.getenv('CDK_DEFAULT_REGION')),
+    env=cdk.Environment(account=EnvSettings.ACCOUNT_ID, region=EnvSettings.ACCOUNT_REGION),
     )
 
 app.synth()
