@@ -63,32 +63,12 @@ class KbInfraStack(Stack):
         
         # initialize knowledge base with default value
         self.knowledge_base = None
-        
-        # depending on user selection in config.py, create knowledge base from OSS or Aurora
-        if vector_store_type =='OSS':
-            
-            self.collectionArn = ssm.StringParameter.from_string_parameter_attributes(
-                self, 
-                "collectionArn",
-                parameter_name="/e2e-rag/collectionArn"
-            ).string_value
-            
-            self.knowledge_base = self.create_knowledge_base_oss()
-            
-        elif vector_store_type =='Aurora':
-            
-            self.secretArn = ssm.StringParameter.from_string_parameter_attributes(
-                self, "secretArn",
-                parameter_name="/e2e-rag/secretArn"
-            ).string_value
-                            
-            self.dbArn = ssm.StringParameter.from_string_parameter_attributes(
-                self, "dbArn",
-                parameter_name="/e2e-rag/dbArn"
-            ).string_value
-            
-            self.knowledge_base = self.create_knowledge_base_aurora()
-
+        self.collectionArn = ssm.StringParameter.from_string_parameter_attributes(
+            self, 
+            "collectionArn",
+            parameter_name="/e2e-rag/collectionArn"
+        ).string_value
+        self.knowledge_base = self.create_knowledge_base_oss()
         self.data_source = self.create_data_source(self.knowledge_base)
     
     def create_knowledge_base_oss(self) -> CfnKnowledgeBase:
@@ -131,52 +111,6 @@ class KbInfraStack(Stack):
             )
         )
 
-    
-    def create_knowledge_base_aurora(self) -> CfnKnowledgeBase:
-        print("Creating knowledge base with Aurora vector store....")
-        supplemental_data_storage_configuration = []
-
-        if multi_modal:
-            print("Creating Multi modal suplementalstorage configuration...")
-            supplemental_data_storage_configuration=CfnKnowledgeBase.SupplementalDataStorageConfigurationProperty(
-                    supplemental_data_storage_locations=[CfnKnowledgeBase.SupplementalDataStorageLocationProperty(
-                        supplemental_data_storage_location_type="S3",
-                        s3_location=CfnKnowledgeBase.S3LocationProperty
-                        (uri=f"s3://{intermediate_bucket_name}")
-                    )]
-                )
-        return CfnKnowledgeBase(
-            self, 
-            'RagKB',
-            knowledge_base_configuration=CfnKnowledgeBase.KnowledgeBaseConfigurationProperty(
-            type="VECTOR",
-            vector_knowledge_base_configuration=CfnKnowledgeBase.VectorKnowledgeBaseConfigurationProperty(
-                embedding_model_arn=self.embedding_model_arn,
-                supplemental_data_storage_configuration=supplemental_data_storage_configuration
-            )
-            ),
-            name='docKnowledgeBaseAurora',
-            role_arn=self.kbRoleArn,
-            # the properties below are optional
-            description='e2eRAG Knowledge base with Aurora PostgreSQL',
-            storage_configuration=CfnKnowledgeBase.StorageConfigurationProperty(
-              type="RDS",
-              # the properties below are optional
-                rds_configuration=bedrock.CfnKnowledgeBase.RdsConfigurationProperty(
-                credentials_secret_arn=self.secretArn,
-                database_name="MyAuroraDB",
-                field_mapping=bedrock.CfnKnowledgeBase.RdsFieldMappingProperty(
-                    metadata_field="metadata",
-                    primary_key_field="id",
-                    text_field="chunks",
-                    vector_field="embedding"
-                ),
-                resource_arn=self.dbArn,
-                table_name="kb_vector_store"
-            )
-            )
-          )    
-    
     def create_data_source(self, knowledge_base) -> CfnDataSource:
         print("Creating data source...")
         kbid = knowledge_base.attr_knowledge_base_id
