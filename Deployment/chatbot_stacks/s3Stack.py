@@ -13,8 +13,6 @@ class S3Stack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
-
-        # The code that defines your stack goes here
         bucket = s3.Bucket(self, bucket_name,
                             bucket_name=bucket_name,
                             removal_policy=RemovalPolicy.DESTROY,
@@ -24,9 +22,3 @@ class S3Stack(Stack):
             sources=[s3deploy.Source.asset("./sagemaker_documentation")],
             destination_bucket=bucket,
         )
-
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "Chatbot1Queue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
