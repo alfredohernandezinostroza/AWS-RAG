@@ -1,11 +1,7 @@
 
-# LOKA Challenge
+# LLM RAG
 
-As stated in the challenge, Company X's main paint point is that currently their developers lose time and interrupt coworkers asking simple questions, while the answers are already available in the company's documentation.
-
-In order to solve this problem it is proposed an LLM-based chatbot with Retrieval Augmented Generation capabilities, using the company's documentation for the dataset. This way, the developers could ask their questions to the chatbot, get the answers they need, and even get references from the documentation for further reading.
-
-This repository contains an implementation of such a system, using several AWS Services: Amazon S3, Bedrock Knowledge Bases, and OpenSearch Service.
+This repository contains an implementation of a LLM-based chatbot with Retrieval Augmented Generation. It relies on several AWS Services: Amazon S3, Bedrock Knowledge Bases, and OpenSearch Service.
 
 The diagram of the architecture is as follows:
 
